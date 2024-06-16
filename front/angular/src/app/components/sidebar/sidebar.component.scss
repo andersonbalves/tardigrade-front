@@ -1,0 +1,14 @@
+.toggle-group {
+  display: flex;
+  flex-flow: row;
+  margin: 30px 0;
+
+  .toggle-item {
+    display: flex;
+    flex: auto;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}

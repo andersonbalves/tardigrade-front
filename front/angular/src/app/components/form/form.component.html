@@ -1,0 +1,8 @@
+<div class="fields" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <div *ngFor="let field of fields; let i = index;">
+    <mat-form-field>
+      <mat-label>{{field.label}}</mat-label>
+      <input required matInput placeholder="{{field.description}}" type="{{field.type}}" />
+    </mat-form-field>
+  </div>
+</div>
