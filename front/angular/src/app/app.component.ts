@@ -43,10 +43,5 @@ export class AppComponent {
   receberCampos(orquestracao: OrquestracaoModel) {
     this.fields = orquestracao.fields;
     this.title = orquestracao.name;
-    console.log({
-      orquestracao,
-      fields: orquestracao.fields,
-      title: this.title,
-    });
   }
 }

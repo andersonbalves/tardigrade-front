@@ -46,15 +46,6 @@ import { FieldModel } from '../../model/api.model';
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
-export class FormComponent implements OnChanges {
+export class FormComponent {
   @Input() fields: FieldModel[] = [];
-
-  ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    console.log({ ab: 'ab', fields: this.fields, changes });
-  }
-  ngOnInit(): void {
-    console.log(this.fields);
-  }
 }
