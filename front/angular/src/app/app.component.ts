@@ -1,14 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from './components/menu/menu.component';
+import { Component } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterOutlet } from '@angular/router';
 import { FormComponent } from './components/form/form.component';
-import { MatButtonModule } from '@angular/material/button';
+import { MenuComponent } from './components/menu/menu.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { FloatLabelType } from '@angular/material/form-field';
 import { FieldModel, OrquestracaoModel } from './model/api.model';
 
 @Component({
@@ -18,29 +14,18 @@ import { FieldModel, OrquestracaoModel } from './model/api.model';
     CommonModule,
     RouterOutlet,
     FlexLayoutModule,
-    FlexLayoutServerModule,
     FormComponent,
-    ReactiveFormsModule,
-    MatButtonModule,
     SidebarComponent,
     MenuComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title: string = 'Cadastro de Pessoas';
   fields: FieldModel[] = [];
 
-  readonly hideRequiredControl = new FormControl(false);
-  readonly floatLabelControl = new FormControl('always' as FloatLabelType);
-
-  readonly options = inject(FormBuilder).group({
-    hideRequired: this.hideRequiredControl,
-    floatLabel: this.floatLabelControl,
-  });
-
-  receberCampos(orquestracao: OrquestracaoModel) {
+  receberCampos(orquestracao: OrquestracaoModel): void {
     this.fields = orquestracao.fields;
     this.title = orquestracao.name;
   }

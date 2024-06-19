@@ -3,18 +3,15 @@
     <mat-card-title>Informações</mat-card-title>
   </mat-card-header>
   <mat-card-content fxLayout="column" fxLayoutAlign="space-around stretch">
-
-    <mat-button-toggle-group name="ambiente" aria-label="Ambiente" class="toggle-group">
-      <mat-button-toggle value="dev" class="toggle-item">Desenvolvimento</mat-button-toggle>
-      <mat-button-toggle value="hom" class="toggle-item">Homologação</mat-button-toggle>
-    </mat-button-toggle-group>
-    <mat-form-field fxFlexAlign="center">
-      <mat-label>Usuário</mat-label>
-      <input required matInput placeholder="Digite seu Usuário" type="number" />
-    </mat-form-field>
-
+    <div [formGroup]="form">
+      <mat-button-toggle-group formControlName="ambiente" name="ambiente" aria-label="Ambiente" class="toggle-group">
+        <mat-button-toggle value="dev" class="toggle-item">Desenvolvimento</mat-button-toggle>
+        <mat-button-toggle value="hom" class="toggle-item">Homologação</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-form-field fxFlexAlign="center">
+        <mat-label>Usuário</mat-label>
+        <input required matInput formControlName="usuario" placeholder="Digite seu Usuário" />
+      </mat-form-field>
+    </div>
   </mat-card-content>
 </mat-card>
-<div fxFlex="value%" fxFlexFill>
-
-</div>

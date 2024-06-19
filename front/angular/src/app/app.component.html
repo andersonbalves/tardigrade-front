@@ -2,19 +2,9 @@
 <main class="main-container">
   <h1 fxFlexAlign="center">{{title}}</h1>
   <section class="content-container" fxLayoutAlign="center">
-    <form [formGroup]="options" fxLayout="row" fxLayoutAlign="space-around" class="content" fxFlex.xs="90"
-      fxFlex.sm="80" fxFlex.md="70" fxFlexAlign="center" fxFlex.lg="60" fxFlex.xl="50">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="sidebar" fxFlex="40">
-          <app-sidebar></app-sidebar>
-        </div>
-        <div class="form" fxFlex="58">
-          <app-form [fields]="fields"></app-form>
-        </div>
-      </div>
-    </form>
+    <app-form [fields]="fields" xLayout="row" class="form" fxFlex.xs="90" fxFlex.sm="80" fxFlex.md="70" fxFlex.lg="60"
+      fxFlex.xl="50" fxFlexAlign="left"></app-form>
   </section>
-
   <div class="footer fixed-footer" fxFlexAlign="bottom">
     <mat-toolbar fxLayout="row">Footer</mat-toolbar>
   </div>
