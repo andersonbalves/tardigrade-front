@@ -10,6 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ErrorStateMatcher, MatPseudoCheckboxModule } from '@angular/material/core';
@@ -17,11 +18,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { FieldModel } from '../../model/api.model';
+import { FieldModel } from '../../app.model';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormBottomSheetComponent } from './form.bottom.sheet.component';
 import { FormModel } from './form.model';
 
 @Component({
@@ -40,9 +43,12 @@ import { FormModel } from './form.model';
     MatButtonToggleModule,
     MatButtonModule,
     MatDividerModule,
+    MatBottomSheetModule,
+    MatListModule,
     FlexLayoutModule,
     FlexLayoutServerModule,
     SidebarComponent,
+    FormBottomSheetComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './form.component.html',
@@ -60,10 +66,13 @@ export class FormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   matcher = new ErrorStateMatcher();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _bottomSheet: MatBottomSheet,
+  ) {}
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({});
+    this.form = this._formBuilder.group({});
     this.subscription = this.fieldsSubject.subscribe((fields) => {
       this.formModel = this.createFormModel(fields);
       this.form = this.createForm(fields);
@@ -88,7 +97,7 @@ export class FormComponent implements OnInit, OnDestroy {
     controls['ambiente'] = new FormControl('dev');
     controls['usuario'] = new FormControl('', Validators.required);
 
-    return this.formBuilder.group(controls);
+    return this._formBuilder.group(controls);
   }
 
   createFormModel(fields: FieldModel[]): FormModel[] {
@@ -117,10 +126,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   executar() {
-    console.log({
-      message: 'executar',
-      formGroup: this.form,
-      values: this.form.value,
-    });
+    this._bottomSheet.open(FormBottomSheetComponent).instance.valuesSubject.next(this.form.value);
   }
 }

@@ -17,7 +17,8 @@
               </mat-error>
               <mat-error
                 *ngIf="(field.fieldFormControl.hasError('minLength') || field.fieldFormControl.hasError('maxLength')) && !field.fieldFormControl.hasError('required')">
-                O valor do campo {{field.label}} deve conter entre {{field.minLength}} e {{field.maxLength}} caracteres
+                O valor do campo {{field.label}} deve conter entre {{field.minLength}} e {{field.maxLength}}
+                caracteres
               </mat-error>
               <mat-error *ngIf="field.fieldFormControl.hasError('required')">
                 Campo {{field.label}} <strong>obrigatório</strong>
@@ -33,5 +34,6 @@
         Enviar
       </button>
     </div>
+
   </form>
 </div>

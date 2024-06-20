@@ -1,20 +1,21 @@
 <div fxLayout="row">
   <ng-container *ngIf="menu$ | async as menu">
-    <div class="menu-nivel-1" *ngFor="let item of menu.items; let i = index;" style="width: 100%">
-      <button *ngIf="item.items && !item.api_path" [matMenuTriggerFor]="nivel2Menu"
-        [matMenuTriggerData]="{ menu_nivel_2: item.items, menu_nivel_1: item }" mat-menu-item>{{item.label}}</button>
-      <button *ngIf="item.api_path && !item.items" (click)="findTemplate(item.api_path)"
+    <div class="menu-nivel-1" *ngFor="let item of menu; let i = index;" style="width: 100%">
+      <button *ngIf="isArray(item.action)" [matMenuTriggerFor]="nivel2Menu"
+        [matMenuTriggerData]="{ menu_nivel_2: item.action, menu_nivel_1: item }" mat-menu-item>{{item.label}}</button>
+      <button *ngIf="isString(item.action)" (click)="findTemplate([item.label], item.action)"
         mat-menu-item>{{item.label}}</button>
     </div>
     <mat-menu #nivel2Menu="matMenu">
       <ng-template matMenuContent let-menu_nivel_2="menu_nivel_2" let-menu_nivel_1="menu_nivel_1">
-        <div class="menu-nivel-2" *ngFor="let item of menu_nivel_2; let i = index;">
-          <button *ngIf="item.items && !item.api_path" [matMenuTriggerFor]="nivel3Menu"
-            [matMenuTriggerData]="{ menu_nivel_3: item.items, menu_nivel_2: item, menu_nivel_1: menu_nivel_1 }"
+        <div class="menu-nivel-2" *ngFor="let item of (isArray(menu_nivel_2) ? menu_nivel_2 : []); let i = index;">
+          <button *ngIf="isArray(item.action)" [matMenuTriggerFor]="nivel3Menu"
+            [matMenuTriggerData]="{ menu_nivel_3: item.action, menu_nivel_2: item, menu_nivel_1: menu_nivel_1 }"
             mat-menu-item>
             {{item.label}}
           </button>
-          <button *ngIf="item.api_path && !item.items" (click)="findTemplate(item.api_path)" mat-menu-item>
+          <button *ngIf="isString(item.action)" (click)="findTemplate([menu_nivel_1.label, item.label], item.action)"
+            mat-menu-item>
             {{item.label}}
           </button>
         </div>
@@ -24,8 +25,9 @@
     <mat-menu #nivel3Menu="matMenu">
       <ng-template matMenuContent let-menu_nivel_3="menu_nivel_3" let-menu_nivel_2="menu_nivel_2"
         let-menu_nivel_1="menu_nivel_1">
-        <div class="menu-nivel-1" *ngFor="let item of menu_nivel_3; let i = index;">
-          <button mat-menu-item (click)="findTemplate(item.api_path)">
+        <div class="menu-nivel-1" *ngFor="let item of (isArray(menu_nivel_3) ? menu_nivel_3 : []); let i = index;">
+          <button *ngIf="isString(item.action)"
+            (click)="findTemplate([menu_nivel_1.label, menu_nivel_2.label, item.label], item.action)" mat-menu-item>
             {{item.label}}
           </button>
         </div>

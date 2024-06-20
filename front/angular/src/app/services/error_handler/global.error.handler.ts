@@ -10,7 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: any): void {
     this.ngZone.run(() => {
       let message = '';
-
       if (error instanceof HttpErrorResponse) {
         message = `Error Status: ${error.status}\nMessage: ${error.message}`;
       } else {

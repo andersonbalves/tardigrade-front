@@ -1,4 +1,8 @@
-export interface OrquestracaoModel {
+export interface AppModel {
+  breadcrumb: Array<string>;
+  form: ApiModel;
+}
+export interface ApiModel {
   name: string;
   path: string;
   fields: FieldModel[];

@@ -1,5 +1,4 @@
 export interface MenuModel {
   label: string;
-  api_path?: string;
-  items: MenuModel[];
+  action: string | Array<MenuModel>;
 }
