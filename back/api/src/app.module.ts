@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ApisModule } from './apis/apis.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { FormModule } from './form/form.module';
 import { MenuModule } from './menu/menu.module';
 
 @Module({
-  imports: [ApisModule, MenuModule],
+  imports: [EventEmitterModule.forRoot(), FormModule, MenuModule],
   controllers: [],
   providers: [],
 })

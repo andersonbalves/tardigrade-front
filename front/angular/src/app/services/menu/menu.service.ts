@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { OrquestracaoModel } from '../../model/api.model';
-import { MenuModel } from '../../model/menu.model';
+import { ApiModel } from '../../app.model';
+import { MenuModel } from '../../components/menu/menu.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +15,15 @@ export class MenuService {
     private errorHandler: ErrorHandler,
   ) {}
 
-  getMenu(): Observable<MenuModel> {
+  getMenu(): Observable<MenuModel[]> {
     return this.httpClient
-      .get<MenuModel>(`${this.baseUrl}/v1/menu`)
+      .get<MenuModel[]>(`${this.baseUrl}/v1/menu`)
       .pipe(retry(2), catchError(this.handleError.bind(this)));
   }
 
-  getFieldsFromAPI(api: string): Observable<OrquestracaoModel> {
+  getFieldsFromAPI(api: string): Observable<ApiModel> {
     return this.httpClient
-      .get<OrquestracaoModel>(`${this.baseUrl}/${api}`)
+      .get<ApiModel>(`${this.baseUrl}/${api}`)
       .pipe(retry(2), catchError(this.handleError.bind(this)));
   }
 

@@ -15,9 +15,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { OrquestracaoModel } from '../../model/api.model';
-import { MenuModel } from '../../model/menu.model';
+import { ApiModel, AppModel } from '../../app.model';
 import { MenuService } from '../../services/menu/menu.service';
+import { MenuModel } from './menu.model';
 
 @Component({
   selector: 'app-menu',
@@ -36,12 +36,14 @@ import { MenuService } from '../../services/menu/menu.service';
   ],
 })
 export class MenuComponent implements OnInit, OnDestroy {
-  menu$: BehaviorSubject<MenuModel> = new BehaviorSubject<MenuModel>({
-    label: 'Carregando Menu',
-    items: [],
-  });
+  menu$: BehaviorSubject<MenuModel[]> = new BehaviorSubject<MenuModel[]>([
+    {
+      label: 'Carregando Menu',
+      action: [],
+    },
+  ]);
 
-  @Output() orquestracao = new EventEmitter<OrquestracaoModel>();
+  @Output() form = new EventEmitter<AppModel>();
   private destroy$ = new Subject<void>();
 
   constructor(private menuService: MenuService) {}
@@ -50,7 +52,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.menuService
       .getMenu()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((menu: MenuModel) => this.menu$.next(menu));
+      .subscribe((menu: MenuModel[]) => this.menu$.next(menu));
   }
 
   ngOnDestroy(): void {
@@ -58,10 +60,19 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  findTemplate(api_path: string): void {
+  findTemplate(breadcrumb: Array<string>, api_path: string): void {
     this.menuService
       .getFieldsFromAPI(api_path)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((orquestracao: OrquestracaoModel) => this.orquestracao.emit(orquestracao));
+      .subscribe((form: ApiModel) => this.form.emit({ breadcrumb, form } as AppModel));
+  }
+  hasChild(item: MenuModel): boolean {
+    return Array.isArray(item.action) && item.action.length > 0;
+  }
+  isString(item: any): item is string {
+    return typeof item === 'string';
+  }
+  isArray(item: any): item is Array<MenuModel> {
+    return Array.isArray(item);
   }
 }

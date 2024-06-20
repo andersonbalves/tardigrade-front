@@ -4,9 +4,10 @@
   </mat-card-header>
   <mat-card-content fxLayout="column" fxLayoutAlign="space-around stretch">
     <div [formGroup]="form">
-      <mat-button-toggle-group formControlName="ambiente" name="ambiente" aria-label="Ambiente" class="toggle-group">
-        <mat-button-toggle value="dev" class="toggle-item">Desenvolvimento</mat-button-toggle>
-        <mat-button-toggle value="hom" class="toggle-item">Homologação</mat-button-toggle>
+      <mat-button-toggle-group color="error" formControlName="ambiente" name="ambiente" aria-label="Ambiente"
+        class="toggle-group">
+        <mat-button-toggle color="error" value="dev" class="toggle-item">Desenvolvimento</mat-button-toggle>
+        <mat-button-toggle color="error" value="hom" class="toggle-item">Homologação</mat-button-toggle>
       </mat-button-toggle-group>
       <mat-form-field fxFlexAlign="center">
         <mat-label>Usuário</mat-label>
